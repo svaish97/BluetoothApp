@@ -4,27 +4,19 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
-import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import app.akexorcist.bluetotohspp.library.BluetoothSPP
-import app.akexorcist.bluetotohspp.library.BluetoothState
-import com.saurabh.vaish.bluetoothapp.Class.BluetoothServer
-//import com.saurabh.vaish.bluetoothapp.Class.BluetoothServer
-//import com.saurabh.vaish.bluetoothapp.Class.BluetoothServer.APP_NAME
-//import com.saurabh.vaish.bluetoothapp.Class.BluetoothServer.MY_UUID
-//import com.saurabh.vaish.bluetoothapp.Class.SendReceive
+
 import kotlinx.android.synthetic.main.activity_main.*
-import me.aflak.bluetooth.Bluetooth
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
-import java.util.stream.BaseStream
 
 
 
@@ -35,7 +27,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var bluetoothSocket:BluetoothSocket
     lateinit var inputStream: InputStream
     lateinit var outputStream: OutputStream
+    var stringResult: String=""
     val uuid=UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
+    var boolean:Boolean=false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,16 +42,20 @@ class MainActivity : AppCompatActivity() {
             mdevice = madapter.getRemoteDevice("00:15:83:35:97:C1")
             bluetoothSocket = mdevice.createRfcommSocketToServiceRecord(uuid)
         }
+
         val bluetoothServ = BluetoothServ()
         bluetoothServ.execute()
+
         one.setOnClickListener {
             stringtoSend="1"
             outputStream.write(stringtoSend.toByteArray())
+            receive()
 
         }
         two.setOnClickListener {
             stringtoSend="2"
             outputStream.write(stringtoSend.toByteArray())
+            receive()
 
         }
         three.setOnClickListener {
@@ -169,8 +167,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: Void?) {
-//            inputStream=bluetoothSocket.inputStream
             outputStream=bluetoothSocket.outputStream
+            inputStream=bluetoothSocket.inputStream
+
             super.onPostExecute(result)
         }
     }
@@ -183,6 +182,37 @@ class MainActivity : AppCompatActivity() {
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    public fun receive(){
+        Receive().execute()
+
+    }
+    inner class Receive:AsyncTask<Void,Void,String?>(){
+        override fun doInBackground(vararg p0: Void?): String? {
+            var byte=ByteArray(1024)
+            while(true){
+                val value=inputStream.read(byte)
+                Log.d("Receiving",value.toString())
+                stringResult+= String(byte,0,value)
+
+                Log.d("Receiving",stringResult)
+                if(stringResult[stringResult.length-1]=='.'){
+                    break
+                }
+
+            }
+
+
+            return stringResult
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            tv_result.text= result
+            stringResult=""
+
+        }
     }
 
 }

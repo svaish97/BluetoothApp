@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         val bluetoothServ = BluetoothServ()
         bluetoothServ.execute()
 
+
         one.setOnClickListener {
             stringtoSend="1"
             outputStream.write(stringtoSend.toByteArray())
@@ -198,7 +199,10 @@ class MainActivity : AppCompatActivity() {
 
                 Log.d("Receiving",stringResult)
                 if(stringResult[stringResult.length-1]=='.'){
-                    break
+                    runOnUiThread {
+                        tv_result.text= stringResult
+                        stringResult=""
+                    }
                 }
 
             }
@@ -207,12 +211,11 @@ class MainActivity : AppCompatActivity() {
             return stringResult
         }
 
-        override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
-            tv_result.text= result
-            stringResult=""
-
-        }
+//        override fun onPostExecute(result: String?) {
+//            super.onPostExecute(result)
+//
+//
+//        }
     }
 
 }

@@ -111,7 +111,15 @@ class MainActivity : AppCompatActivity() {
             if(boolean) {
                 stringtoSend = "5"
                 outputStream.write(stringtoSend.toByteArray())
-                receive()
+//                receive()
+                tv_1.text=""
+                tv_2.text=""
+                tv_3.text=""
+                tv_4.text=""
+                result_1.text=""
+                result_2.text=""
+                result_3.text=""
+                result_4.text=""
             }
             else{
                 Toast.makeText(baseContext,"Device Not Available",Toast.LENGTH_SHORT).show()
@@ -131,7 +139,15 @@ class MainActivity : AppCompatActivity() {
             if(boolean) {
                 stringtoSend = "7"
                 outputStream.write(stringtoSend.toByteArray())
-                receive()
+//                receive()
+                tv_1.text=""
+                tv_2.text=""
+                tv_3.text=""
+                tv_4.text=""
+                result_1.text=""
+                result_2.text=""
+                result_3.text=""
+                result_4.text=""
             }
             else{
                 Toast.makeText(baseContext,"Device Not Available",Toast.LENGTH_SHORT).show()
@@ -141,7 +157,15 @@ class MainActivity : AppCompatActivity() {
             if(boolean) {
                 stringtoSend = "8"
                 outputStream.write(stringtoSend.toByteArray())
-                receive()
+//                receive()
+                tv_1.text=""
+                tv_2.text=""
+                tv_3.text=""
+                tv_4.text=""
+                result_1.text=""
+                result_2.text=""
+                result_3.text=""
+                result_4.text=""
             }
             else{
                 Toast.makeText(baseContext,"Device Not Available",Toast.LENGTH_SHORT).show()
@@ -222,7 +246,15 @@ class MainActivity : AppCompatActivity() {
             if(boolean) {
                 stringtoSend = "#"
                 outputStream.write(stringtoSend.toByteArray())
-                receive()
+//                receive()
+                tv_1.text=""
+                tv_2.text=""
+                tv_3.text=""
+                tv_4.text=""
+                result_1.text=""
+                result_2.text=""
+                result_3.text=""
+                result_4.text=""
             }
             else{
                 Toast.makeText(baseContext,"Device Not Available",Toast.LENGTH_SHORT).show()
@@ -324,7 +356,7 @@ class MainActivity : AppCompatActivity() {
                             tv_3.text="CO2 :+"
                             tv_4.text="O2  :+"
                             result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()+"  "+test
-                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()
+                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()+"  ppm"
                             result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.8).toString()
                             result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()+" "+oil
                         }
@@ -335,7 +367,7 @@ class MainActivity : AppCompatActivity() {
                             tv_3.text="SOX :+"
                             tv_4.text="O2  :+"
                             result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()
-                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()
+                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()+"  ppm"
                             result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.8).toString()
                             result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()+" "+oil
                         }
@@ -346,7 +378,7 @@ class MainActivity : AppCompatActivity() {
                             tv_3.text="Lambda :+"
                             tv_4.text="CO :+"
                             result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()
-                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()
+                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()+"  ppm"
                             result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.8).toString()
                             result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()+" "+oil
                         }
@@ -360,7 +392,7 @@ class MainActivity : AppCompatActivity() {
                             result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()
                             result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.0).toString()
                             result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.7).toString()
-                            result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()+" "+oil
+                            result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()
                         }
                         if(stringResult[0]=='3'){
                             test=""
@@ -445,6 +477,118 @@ class MainActivity : AppCompatActivity() {
                             result_3.text=""
                             result_4.text="FUEL"
                         }
+                        if(stringResult[0]=='C'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="Zero Setting"
+                            result_3.text=""
+                            result_4.text="Wait"
+                        }
+
+
+
+                        if(stringResult[0]=='F'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="Zero Setting"
+                            result_3.text=""
+                            result_4.text="Done"
+                        }
+                        if(stringResult[0]=='G'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="HC Residue Check"
+                            result_3.text=""
+                            result_4.text=""
+                        }
+                        if(stringResult[0]=='H'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="HC Residue OK"
+                            result_3.text=""
+                            result_4.text=""
+                        }
+
+                        if(stringResult[0]=='6'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="Pump Off"
+                            result_3.text="Measurement Off"
+                            result_4.text=""
+                        }
+
+                        if(stringResult[0]=='I'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="Press key <1>"
+                            result_3.text=""
+                            result_4.text=""
+                        }
+
+                        if(stringResult[0]=='J'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="Zero Setting"
+                            result_3.text=""
+                            result_4.text="Wait"
+                        }
+
+                        if(stringResult[0]=='K'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="Zero Setting"
+                            result_3.text=""
+                            result_4.text="Done"
+                        }
+
+                        if(stringResult[0]=='L'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="HC Residue Check"
+                            result_3.text=""
+                            result_4.text=""
+                        }
+                        if(stringResult[0]=='M'){
+                            tv_1.text=""
+                            tv_2.text=""
+                            tv_3.text=""
+                            tv_4.text=""
+                            result_1.text=""
+                            result_2.text="HC Residue OK"
+                            result_3.text=""
+                            result_4.text=""
+                        }
+
+
+
+
 
 
 
@@ -471,5 +615,7 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
     }
+
+
 
 }

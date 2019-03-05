@@ -45,10 +45,11 @@ class ListBluetooth : AppCompatActivity() {
 
         lv_devices.setOnItemClickListener { adapterView, view, i, l ->
             val address=listOfAddress[i]
-            Log.d("SV",address)
-//            val intent = Intent(baseContext,MainActivity::class.java)
-//            intent.putExtra("address",address)
-//            startActivity(intent)
+//            Log.d("DeviceAddress",address)
+            val intent = Intent(baseContext,MainActivity::class.java)
+            intent.putExtra("DeviceAddress",address)
+            startActivity(intent)
+            finish()
         }
 
 

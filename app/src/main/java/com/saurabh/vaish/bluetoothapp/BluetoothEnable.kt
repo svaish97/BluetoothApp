@@ -19,7 +19,7 @@ class BluetoothEnable : AppCompatActivity() {
             Toast.makeText(baseContext,"Your Phone doesn't support Bluetooth", Toast.LENGTH_SHORT).show()
         }
         if(madapter.isEnabled){
-            val intent=Intent(this@BluetoothEnable,MainActivity::class.java)
+            val intent=Intent(this@BluetoothEnable,ListBluetooth::class.java)
             startActivity(intent)
             finish()
         }
@@ -35,7 +35,7 @@ class BluetoothEnable : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode==123){
             if(resultCode== Activity.RESULT_OK){
-                val intent=Intent(this@BluetoothEnable,MainActivity::class.java)
+                val intent=Intent(this@BluetoothEnable,ListBluetooth::class.java)
                 startActivity(intent)
                 finish()
             }

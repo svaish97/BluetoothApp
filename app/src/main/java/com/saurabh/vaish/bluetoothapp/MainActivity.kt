@@ -45,11 +45,11 @@ class MainActivity : AppCompatActivity() {
         madapter= BluetoothAdapter.getDefaultAdapter()
 
         if(madapter.isEnabled) {
-            try {
-                mdevice = madapter.getRemoteDevice(deviceAddress)
-                bluetoothSocket = mdevice.createRfcommSocketToServiceRecord(uuid)
-                val bluetoothServ = BluetoothServ()
-                bluetoothServ.execute()
+                    try {
+                        mdevice = madapter.getRemoteDevice(deviceAddress)
+                        bluetoothSocket = mdevice.createRfcommSocketToServiceRecord(uuid)
+                        val bluetoothServ = BluetoothServ()
+                        bluetoothServ.execute()
                 Thread.sleep(5000)
             }
            catch (e:Exception){
@@ -336,272 +336,273 @@ class MainActivity : AppCompatActivity() {
     inner class Receive:AsyncTask<Void,Void,String?>(){
         override fun doInBackground(vararg p0: Void?): String? {
             var byte=ByteArray(1024)
-            while(true){
-                val value=inputStream.read(byte)
-                Log.d("Receiving",value.toString())
-                stringResult+= String(byte,0,value)
+            while(true) {
 
-                Log.d("Receiving",stringResult)
-                if(stringResult[stringResult.length-1]=='.'){
+                val value = inputStream.read(byte)
+
+                Log.d("Receiving", value.toString())
+                stringResult += String(byte, 0, value)
+
+                Log.d("Receiving", stringResult)
+                if (stringResult[stringResult.length - 1] == '.') {
                     runOnUiThread {
-                        val value=stringResult.substring(9,12)
-                        countInChar=stringResult[12]
-                        val sen1=stringResult[13]
-                        val flag=stringResult[14]
-                        val oil=stringResult.substring(1,8)
+                        val value = stringResult.substring(9, 12)
+                        countInChar = stringResult[12]
+                        val sen1 = stringResult[13]
+                        val flag = stringResult[14]
+                        val oil = stringResult.substring(1, 8)
 
-                        if(stringResult[0]=='1' && Character.getNumericValue(countInChar)%3==1){
-                            tv_1.text="CO  :+"
-                            tv_2.text="HC  :+"
-                            tv_3.text="CO2 :+"
-                            tv_4.text="O2  :+"
-                            result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()+"  "+test
-                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()+"  ppm"
-                            result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.8).toString()
-                            result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()+" "+oil
+                        if (stringResult[0] == '1' && Character.getNumericValue(countInChar) % 3 == 1) {
+                            tv_1.text = "CO  :+"
+                            tv_2.text = "HC  :+"
+                            tv_3.text = "CO2 :+"
+                            tv_4.text = "O2  :+"
+                            result_1.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 0.8).toString() + "  " + test
+                            result_2.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 2.0).toString() + "  ppm"
+                            result_3.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 1.8).toString()
+                            result_4.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 0.6).toString() + " " + oil
                         }
-                        if(stringResult[0]=='1' && Character.getNumericValue(countInChar)%3==2){
-                            test=""
-                            tv_1.text="CO  :+"
-                            tv_2.text="NOX :+"
-                            tv_3.text="SOX :+"
-                            tv_4.text="O2  :+"
-                            result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()
-                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()+"  ppm"
-                            result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.8).toString()
-                            result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()+" "+oil
+                        if (stringResult[0] == '1' && Character.getNumericValue(countInChar) % 3 == 2) {
+                            test = ""
+                            tv_1.text = "CO  :+"
+                            tv_2.text = "NOX :+"
+                            tv_3.text = "SOX :+"
+                            tv_4.text = "O2  :+"
+                            result_1.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 0.8).toString()
+                            result_2.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 2.0).toString() + "  ppm"
+                            result_3.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 1.8).toString()
+                            result_4.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 0.6).toString() + " " + oil
                         }
-                        if(stringResult[0]=='1' && Character.getNumericValue(countInChar)%3==0){
-                            test=""
-                            tv_1.text="Oil tp :+"
-                            tv_2.text="A.F.R. :+"
-                            tv_3.text="Lambda :+"
-                            tv_4.text="CO :+"
-                            result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()
-                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()+"  ppm"
-                            result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.8).toString()
-                            result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()+" "+oil
-                        }
-
-                        if(stringResult[0]=='2'){
-                            test=""
-                            tv_1.text="rpm  "
-                            tv_2.text="pres "
-                            tv_3.text="flow "
-                            tv_4.text="temp "
-                            result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()
-                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.0).toString()
-                            result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.7).toString()
-                            result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()
-                        }
-                        if(stringResult[0]=='3'){
-                            test=""
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text="Serial No"
-                            result_2.text=""
-                            result_3.text="[1000479]"
-                            result_4.text=""
-                        }
-                        if(stringResult[0]=='4'){
-                            test=""
-                            tv_1.text="DATE"
-                            tv_2.text=""
-                            tv_3.text="TIME"
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text=""
-                            result_3.text=""
-                            result_4.text=""
-                        }
-                        if(stringResult[0]=='A'){
-                            test="TEST"
-                            tv_1.text="CO  :+"
-                            tv_2.text="HC  :+"
-                            tv_3.text="CO2 :+"
-                            tv_4.text="O2  :+"
-                            result_1.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.8).toString()+" "+test
-                            result_2.text=DecimalFormat("##.00").format(Integer.parseInt(value)*2.0).toString()
-                            result_3.text=DecimalFormat("##.00").format(Integer.parseInt(value)*1.8).toString()
-                            result_4.text=DecimalFormat("##.00").format(Integer.parseInt(value)*0.6).toString()+" "+oil
-                        }
-                        if(stringResult[0]=='B'){
-                            tv_1.text="MAKE  :"
-                            tv_2.text="MODEL :"
-                            tv_3.text="Version :"
-                            tv_4.text="Serial No.:"
-                            result_1.text="VOLCANO"
-                            result_2.text="DP-204P"
-                            result_3.text="4 FEB 2019"
-                            result_4.text="12P125"
-                        }
-                        if(stringResult[0]=='*'){
-                            tv_1.text="Model No  "
-                            tv_2.text="Version "
-                            tv_3.text="Serial No. :"
-                            tv_4.text="Ful=PET,"
-                            result_1.text="DP-204P"
-                            result_2.text="04 FEB 2019"
-                            result_3.text="12P125"
-                            result_4.text="CNG,LPG"
-                        }
-                        if(stringResult[0]=='D' && sen1=='0' && flag=='0'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="PRINT"
-                            result_3.text=""
-                            result_4.text=""
-                        }
-                        if(stringResult[0]=='D' && sen1=='1' && flag=='0'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="ENTER PAPER"
-                            result_3.text=""
-                            result_4.text=""
-                        }
-                        if(stringResult[0]=='9'){
-                            tv_1.text="0-PETROL"
-                            tv_2.text="1-PET+CNG"
-                            tv_3.text="2-PET+LPG"
-                            tv_4.text="SELECT"
-                            result_1.text="3-C.N.G"
-                            result_2.text="4-L.P.G"
-                            result_3.text=""
-                            result_4.text="FUEL"
-                        }
-                        if(stringResult[0]=='C'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="Zero Setting"
-                            result_3.text=""
-                            result_4.text="Wait"
+                        if (stringResult[0] == '1' && Character.getNumericValue(countInChar) % 3 == 0) {
+                            test = ""
+                            tv_1.text = "Oil tp :+"
+                            tv_2.text = "A.F.R. :+"
+                            tv_3.text = "Lambda :+"
+                            tv_4.text = "CO :+"
+                            result_1.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 0.6).toString()
+                            result_2.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 2.0).toString() + "  ppm"
+                            result_3.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 1.8).toString()
+                            result_4.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 0.8).toString() + " " + oil
                         }
 
-
-
-                        if(stringResult[0]=='F'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="Zero Setting"
-                            result_3.text=""
-                            result_4.text="Done"
+                        if (stringResult[0] == '2') {
+                            test = ""
+                            tv_1.text = "rpm  "
+                            tv_2.text = "pres "
+                            tv_3.text = "flow "
+                            tv_4.text = "temp "
+                            result_1.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 0.8).toString()
+                            result_2.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 1.0).toString()
+                            result_3.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 0.7).toString()
+                            result_4.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 0.6).toString()
                         }
-                        if(stringResult[0]=='G'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="HC Residue Check"
-                            result_3.text=""
-                            result_4.text=""
+                        if (stringResult[0] == '3') {
+                            test = ""
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = "Serial No"
+                            result_2.text = ""
+                            result_3.text = "[1000479]"
+                            result_4.text = ""
                         }
-                        if(stringResult[0]=='H'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="HC Residue OK"
-                            result_3.text=""
-                            result_4.text=""
+                        if (stringResult[0] == '4') {
+                            test = ""
+                            tv_1.text = "DATE"
+                            tv_2.text = ""
+                            tv_3.text = "TIME"
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = ""
+                            result_3.text = ""
+                            result_4.text = ""
                         }
-
-                        if(stringResult[0]=='6'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="Pump Off"
-                            result_3.text="Measurement Off"
-                            result_4.text=""
+                        if (stringResult[0] == 'A') {
+                            test = "TEST"
+                            tv_1.text = "CO  :+"
+                            tv_2.text = "HC  :+"
+                            tv_3.text = "CO2 :+"
+                            tv_4.text = "O2  :+"
+                            result_1.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 0.8).toString() + " " + test
+                            result_2.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 2.0).toString()
+                            result_3.text = DecimalFormat("##.00").format(Integer.parseInt(value) * 1.8).toString()
+                            result_4.text =
+                                DecimalFormat("##.00").format(Integer.parseInt(value) * 0.6).toString() + " " + oil
                         }
-
-                        if(stringResult[0]=='I'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="Press key <1>"
-                            result_3.text=""
-                            result_4.text=""
+                        if (stringResult[0] == 'B') {
+                            tv_1.text = "MAKE  :"
+                            tv_2.text = "MODEL :"
+                            tv_3.text = "Version :"
+                            tv_4.text = "Serial No.:"
+                            result_1.text = "VOLCANO"
+                            result_2.text = "DP-204P"
+                            result_3.text = "4 FEB 2019"
+                            result_4.text = "12P125"
                         }
-
-                        if(stringResult[0]=='J'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="Zero Setting"
-                            result_3.text=""
-                            result_4.text="Wait"
+                        if (stringResult[0] == '*') {
+                            tv_1.text = "Model No  "
+                            tv_2.text = "Version "
+                            tv_3.text = "Serial No. :"
+                            tv_4.text = "Ful=PET,"
+                            result_1.text = "DP-204P"
+                            result_2.text = "04 FEB 2019"
+                            result_3.text = "12P125"
+                            result_4.text = "CNG,LPG"
                         }
-
-                        if(stringResult[0]=='K'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="Zero Setting"
-                            result_3.text=""
-                            result_4.text="Done"
+                        if (stringResult[0] == 'D' && sen1 == '0' && flag == '0') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "PRINT"
+                            result_3.text = ""
+                            result_4.text = ""
                         }
-
-                        if(stringResult[0]=='L'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="HC Residue Check"
-                            result_3.text=""
-                            result_4.text=""
+                        if (stringResult[0] == 'D' && sen1 == '1' && flag == '0') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "ENTER PAPER"
+                            result_3.text = ""
+                            result_4.text = ""
                         }
-                        if(stringResult[0]=='M'){
-                            tv_1.text=""
-                            tv_2.text=""
-                            tv_3.text=""
-                            tv_4.text=""
-                            result_1.text=""
-                            result_2.text="HC Residue OK"
-                            result_3.text=""
-                            result_4.text=""
+                        if (stringResult[0] == '9') {
+                            tv_1.text = "0-PETROL"
+                            tv_2.text = "1-PET+CNG"
+                            tv_3.text = "2-PET+LPG"
+                            tv_4.text = "SELECT"
+                            result_1.text = "3-C.N.G"
+                            result_2.text = "4-L.P.G"
+                            result_3.text = ""
+                            result_4.text = "FUEL"
+                        }
+                        if (stringResult[0] == 'C') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "Zero Setting"
+                            result_3.text = ""
+                            result_4.text = "Wait"
                         }
 
 
 
+                        if (stringResult[0] == 'F') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "Zero Setting"
+                            result_3.text = ""
+                            result_4.text = "Done"
+                        }
+                        if (stringResult[0] == 'G') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "HC Residue Check"
+                            result_3.text = ""
+                            result_4.text = ""
+                        }
+                        if (stringResult[0] == 'H') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "HC Residue OK"
+                            result_3.text = ""
+                            result_4.text = ""
+                        }
 
+                        if (stringResult[0] == '6') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "Pump Off"
+                            result_3.text = "Measurement Off"
+                            result_4.text = ""
+                        }
 
+                        if (stringResult[0] == 'I') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "Press key <1>"
+                            result_3.text = ""
+                            result_4.text = ""
+                        }
 
+                        if (stringResult[0] == 'J') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "Zero Setting"
+                            result_3.text = ""
+                            result_4.text = "Wait"
+                        }
 
+                        if (stringResult[0] == 'K') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "Zero Setting"
+                            result_3.text = ""
+                            result_4.text = "Done"
+                        }
 
+                        if (stringResult[0] == 'L') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "HC Residue Check"
+                            result_3.text = ""
+                            result_4.text = ""
+                        }
+                        if (stringResult[0] == 'M') {
+                            tv_1.text = ""
+                            tv_2.text = ""
+                            tv_3.text = ""
+                            tv_4.text = ""
+                            result_1.text = ""
+                            result_2.text = "HC Residue OK"
+                            result_3.text = ""
+                            result_4.text = ""
+                        }
 
+                        stringResult = ""
 
-//                        tv_3.text=(Character.getNumericValue(countInChar)%3).toString()
-//                        tv_4.text=oil
-//                        result_4.text=value
-////                       tv_result.text= stringResult
-                        stringResult=""
                     }
                 }
+
+
 
             }
 

@@ -1,5 +1,5 @@
 # BluetoothApp
-This app receives from arduino and also send it to receives the result.
+This app receives from arduino and also send data to it to receives the result.
 
 # Video Link
 https://drive.google.com/file/d/1-STUXCbUrT9svsnh5Gn4a8Q8ko8N5QKL/view
